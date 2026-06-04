@@ -15,7 +15,7 @@ Also works in reverse: extract any binary file into a C array for embedding in o
 ```
 
 1. **Parse** — reads hex bytes from a C-style array (`\x90\x90\xde\xad...`)
-2. **Encrypt** — XOR or RC4 with a provided or randomly generated key
+2. **Encrypt** — XOR, RC4, or AES-256-CTR with a provided or randomly generated key
 3. **Generate** — produces a Rust stub with the encrypted data embedded as base64 and the decryptor inlined
 4. **Compile** — cross-compiles the stub via `rustc --target x86_64-pc-windows-gnu` into a statically linked `.exe`
 5. **At runtime (Windows)** — the stub decrypts the data into RWX memory and executes it
@@ -73,6 +73,9 @@ araloader --input data.c --output output.exe
 # XOR encryption with a custom key
 araloader --input data.c --output output.exe --encrypt xor --key MySecretKey
 
+# AES-256-CTR encryption with a random key
+araloader --input data.c --output output.exe --encrypt aes
+
 # Save the encryption key to a file
 araloader --input data.c --output output.exe --encrypt rc4 --keyfile key.txt
 ```
@@ -91,7 +94,7 @@ Reverse of the build mode — converts any file into a `unsigned char buf[] = "\
 |------|-------------|
 | `-i, --input FILE` | Input file (C array for build, binary for `--extract`) |
 | `-o, --output FILE` | Output file (default: `output.exe`) |
-| `-e, --encrypt MODE` | Encryption: `xor` or `rc4` (default: `rc4`) |
+| `-e, --encrypt MODE` | Encryption: `xor`, `rc4`, or `aes` (default: `rc4`) |
 | `-k, --key STRING` | Custom encryption key (random 32-byte hex key if omitted) |
 | `--keyfile FILE` | Write the encryption key to a file |
 | `--extract` | Extract mode: convert a binary file to a C byte array |
@@ -108,7 +111,7 @@ The parser extracts every `\xHH` sequence. Any surrounding text, variable names,
 
 ## Technical Details
 
-- **Encryption**: XOR (repeating-key) or RC4, both implemented without external crypto libraries
+- **Encryption**: XOR (repeating-key), RC4, or AES-256-CTR — all decryptors are embedded in the stub without external dependencies
 - **Stub size**: the generated Rust stub is typically under 200 lines and compiles to a few hundred KB
 - **Memory execution**: uses `VirtualAlloc` with `PAGE_EXECUTE_READWRITE` to allocate executable memory for the decoded data
 - **No console window**: the stub uses `#![windows_subsystem = "windows"]` — no terminal pops up on execution

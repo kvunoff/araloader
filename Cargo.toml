@@ -1,6 +1,6 @@
 [package]
 name = "AraLoader"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2021"
 
 [[bin]]
@@ -12,3 +12,4 @@ clap = { version = "4.5", features = ["derive"] }
 regex = "1.10"
 rand = "0.8"
 hex = "0.4"
+aes = "0.8"

@@ -1,6 +1,6 @@
 # Maintainer: kvunoff <kvunoff@proton.me>
 pkgname=araloader
-pkgver=0.1.1
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="Build self-decrypting Windows executables from C byte arrays"
 arch=('x86_64')
