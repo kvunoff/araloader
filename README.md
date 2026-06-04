@@ -38,7 +38,25 @@ No external dependencies at runtime — the resulting binary is fully self-conta
 
 ## Installation
 
+### Arch Linux (AUR)
+
 ```bash
+paru -S araloader
+# or
+yay -S araloader
+```
+
+### Cargo (from Git)
+
+```bash
+cargo install --git https://github.com/kvunoff/AraLoader
+```
+
+### Build from source
+
+```bash
+git clone https://github.com/kvunoff/AraLoader
+cd AraLoader
 cargo build --release
 ```
 
