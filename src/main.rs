@@ -21,7 +21,7 @@ struct Args {
     input: PathBuf,
 
     /// Output file path
-    #[arg(short, long, default_value = "payload.exe")]
+    #[arg(short, long, default_value = "output.exe")]
     output: PathBuf,
 
     /// Encryption mode: xor or rc4
@@ -57,11 +57,11 @@ fn main() {
     // Build mode: create self-decrypting executable
     let content = fs::read_to_string(&args.input).expect("Failed to read input file");
 
-    // Extract byte array payload
+    // Extract byte array data
     let bytes = extract_bytes(&content).expect("Failed to extract byte array");
     let original_size = bytes.len();
 
-    // Encrypt payload
+    // Encrypt data
     let (encrypted_bytes, key) = match args.encrypt {
         EncryptionMode::Xor => {
             let key = args.key.unwrap_or_else(generate_random_key);
@@ -77,7 +77,7 @@ fn main() {
         }
     };
 
-    // Generate Rust stub with embedded encrypted payload
+    // Generate Rust stub with embedded encrypted data
     let use_rc4 = matches!(args.encrypt, EncryptionMode::Rc4);
     let rust_code = generate_stub(&encrypted_bytes, &key, use_rc4);
 
@@ -115,8 +115,8 @@ fn main() {
         return;
     }
 
-    println!("[+] Original payload: {} bytes", original_size);
-    println!("[+] Encrypted payload: {} bytes", encrypted_bytes.len());
+    println!("[+] Original data: {} bytes", original_size);
+    println!("[+] Encrypted: {} bytes", encrypted_bytes.len());
     println!("[+] Final executable: {}", args.output.display());
 
     // Save key if requested
