@@ -3,3 +3,13 @@
 *.dll
 *.o
 .DS_Store
+
+# makepkg artifacts (local only)
+pkg/aur/src/
+pkg/aur/pkg/
+pkg/aur/*.tar*
+pkg/aur/*.zst
+
+# personal maintainer files (not for public repo)
+MAINTAINER.md
+scripts/release.sh
