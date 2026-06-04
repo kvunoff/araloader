@@ -7,6 +7,6 @@ pkgbase = araloader
 	license = MIT
 	makedepends = rust
 	source = araloader-0.1.1.tar.gz::https://github.com/kvunoff/AraLoader/archive/refs/tags/v0.1.1.tar.gz
-	sha256sums = 7ffb48d9711ea26105e4eb3332c12b83ce044619e3e80312e922099792721b39
+	sha256sums = f3a983fabc20a9865eada0a5d922ea3fb68611f79463bd6a25585c928708334d
 
 pkgname = araloader
